@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Uygulamayı başlat
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
 
 # Dışa açık port
 EXPOSE 3000
