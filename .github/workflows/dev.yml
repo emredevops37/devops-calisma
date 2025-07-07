@@ -16,8 +16,14 @@ jobs:
       - name: Docker versiyon kontrol
         run: docker --version
 
+      - name: Docker Hub login
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
       - name: Docker image build et
-        run: docker build -t node-demo:dev .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:dev .
+
+      - name: Docker image push et
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:dev
 
       - name: Dev deploy simülasyonu
         run: echo "Kod Dev ortamına deploy edildi!"
