@@ -1,0 +1,22 @@
+[
+  {
+    "id": "deploy-node-demo",
+    "execute-command": "/root/deploy.sh",
+    "command-working-directory": "/root",
+    "response-message": "Deploy started",
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/develop",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        }
+      ]
+    }
+  }
+]
