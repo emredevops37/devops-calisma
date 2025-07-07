@@ -10,11 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Kodu çek
+      - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Docker versiyon
+        run: docker --version
+
+      - name: Docker Hub login
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
       - name: Docker image build et
-        run: docker build -t node-demo:staging .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:staging .
+
+      - name: Docker image push et
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:staging
 
       - name: Staging deploy simülasyonu
         run: echo "Kod Staging ortamına deploy edildi!"

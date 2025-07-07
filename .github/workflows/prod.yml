@@ -10,11 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Kodu çek
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Docker image build et
-        run: docker build -t node-demo:prod .
+      - name: Docker versiyon
+        run: docker --version
 
-      - name: Prod deploy simülasyonu
+      - name: Docker Hub login
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Docker image build et
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:latest .
+
+      - name: Docker image push et
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:latest
+
+      - name: Production deploy simülasyonu
         run: echo "Kod Production ortamına deploy edildi!"
